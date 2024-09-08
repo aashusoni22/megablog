@@ -11,7 +11,6 @@ export default function Post() {
   const navigate = useNavigate();
 
   const userData = useSelector((state) => state.auth.userData);
-
   const isAuthor = post && userData ? post.userId === userData.$id : false;
 
   useEffect(() => {
@@ -33,38 +32,39 @@ export default function Post() {
   };
 
   return post ? (
-    <div className="py-12 bg-gray-50 min-h-screen">
+    <div className="py-12 bg-gray-100 min-h-screen">
       <Container>
-        <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-          <div className="relative">
+        <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
+          <div className="relative p-3">
             <img
               src={appwriteService.getFilePreview(post.featuredImage)}
               alt={post.title}
-              className="w-full h-64 object-contain"
+              className="w-full h-80 object-contain rounded-t-lg"
             />
 
             {isAuthor && (
-              <div className="absolute right-4 top-4 flex space-x-2">
+              <div className="absolute right-4 top-4 flex space-x-3">
                 <Link to={`/edit-post/${post.$id}`}>
-                  <Button bgColor="bg-green-500" className="px-4 py-2">
-                    Edit
+                  <Button className=" hover:bg-cyan-600 text-white px-4 py-2 rounded-md shadow-md">
+                    <i className="fa-regular fa-pen-to-square"></i>
                   </Button>
                 </Link>
                 <Button
-                  bgColor="bg-red-500"
-                  className="px-4 py-2"
+                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md shadow-md"
                   onClick={deletePost}
                 >
-                  Delete
+                  <i className="fa-solid fa-trash"></i>
                 </Button>
               </div>
             )}
           </div>
-          <div className="p-6">
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">
+          <div className="p-8">
+            <h1 className="text-4xl font-bold text-gray-900 mb-6">
               {post.title}
             </h1>
-            <div className="prose max-w-none">{parse(post.content)}</div>
+            <div className="prose prose-lg max-w-none text-gray-700 leading-8">
+              {parse(post.content)}
+            </div>
           </div>
         </div>
       </Container>

@@ -23,13 +23,18 @@ export class AuthService {
         name
       );
       if (userAccount) {
-        console.log("Account created, logging in with:", email, password);
         return this.login({ email, password });
       } else {
         return userAccount;
       }
     } catch (error) {
-      console.log("Appwrite service :: createAccount :: error", error);
+      if (error.code === 409) {
+        // 409 Conflict Error (Email already exists)
+        throw new Error("A user with this email already exists.");
+      } else {
+        console.log("Appwrite service :: createAccount :: error", error);
+        throw error; // Re-throw the error for the UI to handle
+      }
     }
   }
 
@@ -62,12 +67,19 @@ export class AuthService {
   //check if the user is logged in or not
   async getCurrentUser() {
     try {
-      return await this.account.get();
+      const user = await this.account.get();
+      return user;
     } catch (error) {
-      console.log("Appwrite service :: getCurrentUser :: error", error);
+      // If the error indicates that the user is a guest (not logged in)
+      if (error.code === 401) {
+        console.log(
+          "User is not logged in or does not have an active session."
+        );
+      } else {
+        console.log("Appwrite service :: getCurrentUser :: error", error);
+      }
+      return null; // Return null if no user is logged in
     }
-
-    return null;
   }
 
   //logout user

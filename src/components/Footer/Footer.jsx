@@ -4,9 +4,9 @@ import { Logo } from "../../components/index";
 
 function Footer() {
   return (
-    <section className="relative overflow-hidden py-10 bg-slate-900 border-t border-slate-700">
+    <section className="relative py-6 bg-white shadow-lg">
       <div className="relative z-10 mx-auto max-w-7xl px-4">
-        <div className="-m-6 flex flex-wrap">
+        <div className="flex flex-wrap">
           <div className="w-full p-6 md:w-1/2 lg:w-5/12">
             <div className="flex h-full flex-col justify-between">
               <div className="mb-4 inline-flex items-center">
@@ -29,7 +29,7 @@ function Footer() {
               <ul>
                 <li className="mb-3">
                   <Link
-                    className="text-base font-medium text-gray-300 hover:text-cyan-400 transition-colors"
+                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
                     to="/"
                   >
                     Features
@@ -37,7 +37,7 @@ function Footer() {
                 </li>
                 <li className="mb-3">
                   <Link
-                    className="text-base font-medium text-gray-300 hover:text-cyan-400 transition-colors"
+                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
                     to="/"
                   >
                     Pricing
@@ -45,7 +45,7 @@ function Footer() {
                 </li>
                 <li className="mb-3">
                   <Link
-                    className="text-base font-medium text-gray-300 hover:text-cyan-400 transition-colors"
+                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
                     to="/"
                   >
                     Affiliate Program
@@ -53,7 +53,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    className="text-base font-medium text-gray-300 hover:text-cyan-400 transition-colors"
+                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
                     to="/"
                   >
                     Press Kit
@@ -72,7 +72,7 @@ function Footer() {
               <ul>
                 <li className="mb-3">
                   <Link
-                    className="text-base font-medium text-gray-300 hover:text-cyan-400 transition-colors"
+                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
                     to="/"
                   >
                     Account
@@ -80,7 +80,7 @@ function Footer() {
                 </li>
                 <li className="mb-3">
                   <Link
-                    className="text-base font-medium text-gray-300 hover:text-cyan-400 transition-colors"
+                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
                     to="/"
                   >
                     Help
@@ -88,7 +88,7 @@ function Footer() {
                 </li>
                 <li className="mb-3">
                   <Link
-                    className="text-base font-medium text-gray-300 hover:text-cyan-400 transition-colors"
+                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
                     to="/"
                   >
                     Contact Us
@@ -96,7 +96,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    className="text-base font-medium text-gray-300 hover:text-cyan-400 transition-colors"
+                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
                     to="/"
                   >
                     Customer Support
@@ -115,7 +115,7 @@ function Footer() {
               <ul>
                 <li className="mb-3">
                   <Link
-                    className="text-base font-medium text-gray-300 hover:text-cyan-400 transition-colors"
+                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
                     to="/"
                   >
                     Terms &amp; Conditions
@@ -123,7 +123,7 @@ function Footer() {
                 </li>
                 <li className="mb-3">
                   <Link
-                    className="text-base font-medium text-gray-300 hover:text-cyan-400 transition-colors"
+                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
                     to="/"
                   >
                     Privacy Policy
@@ -131,7 +131,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    className="text-base font-medium text-gray-300 hover:text-cyan-400 transition-colors"
+                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
                     to="/"
                   >
                     Licensing

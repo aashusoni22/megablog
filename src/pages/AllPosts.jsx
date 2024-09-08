@@ -26,8 +26,8 @@ function AllPosts() {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="text-lg text-gray-600">Loading...</div>
+      <div className="flex justify-center items-center min-h-96">
+        <div className="loader"></div>
       </div>
     );
 
@@ -40,7 +40,7 @@ function AllPosts() {
 
   return (
     <div className="w-full py-12 bg-gray-50 min-h-screen">
-      <h1 className="text-center text-4xl font-extrabold text-cyan-600 mb-10">
+      <h1 className="text-center text-3xl font-bold text-slate-700 mb-10">
         All Posts
       </h1>
       <Container>

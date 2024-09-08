@@ -3,11 +3,11 @@ import { Signup as SignupComponent } from "../components/index";
 
 function Signup() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12">
+    <div className="justify-center items-center flex p-6 bg-gray-100">
       <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-6">
-        <h2 className="text-center text-2xl font-bold text-cyan-500 mb-6">
+        <h1 className="text-3xl font-bold text-center mb-5 text-gray-800">
           Sign Up
-        </h2>
+        </h1>
         <SignupComponent />
       </div>
     </div>

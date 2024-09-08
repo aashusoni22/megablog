@@ -32,7 +32,7 @@ function App() {
   return (
     <div
       className={`min-h-screen flex flex-col ${
-        loading ? "bg-gray-100" : "bg-slate-900"
+        loading ? "bg-gray-100" : "bg-white"
       } transition-colors duration-300`}
     >
       {!loading && (
@@ -46,7 +46,7 @@ function App() {
       )}
       {loading && (
         <div className="flex items-center justify-center h-screen bg-gray-100">
-          <p className="text-gray-600 text-lg">Loading...</p>
+          <p className="loader"></p>
         </div>
       )}
     </div>

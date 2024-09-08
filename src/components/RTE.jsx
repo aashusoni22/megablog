@@ -42,7 +42,7 @@ export default function RTE({ name, control, label, defaultValue = "" }) {
                 "wordcount",
               ],
               toolbar:
-                "undo redo | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help",
+                "undo redo | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | image | bullist numlist outdent indent | removeformat | help",
               content_style:
                 "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
               setup: (editor) => {
