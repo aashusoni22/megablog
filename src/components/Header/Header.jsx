@@ -42,7 +42,7 @@ function Header() {
         <nav className="flex items-center justify-between">
           <div className="flex items-center">
             <Link to="/">
-              <Logo width="40px" title="MegaBlog" />
+              <Logo width="40px" />
             </Link>
           </div>
           <ul className="flex space-x-4">
