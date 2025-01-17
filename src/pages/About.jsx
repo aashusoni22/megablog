@@ -38,21 +38,6 @@ function About() {
     },
   ];
 
-  // Team members data (you can modify this)
-  const team = [
-    {
-      name: "John Doe",
-      role: "Founder & Developer",
-      image: "/api/placeholder/400/400", // Replace with actual image
-    },
-    {
-      name: "Jane Smith",
-      role: "Content Lead",
-      image: "/api/placeholder/400/400", // Replace with actual image
-    },
-    // Add more team members as needed
-  ];
-
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-20">
       {/* Hero Section */}
@@ -125,45 +110,17 @@ function About() {
                 the best possible experience for our users.
               </p>
               <div className="flex items-center justify-center gap-8">
-                <Code2 className="w-8 h-8 text-coral-500" />
-                <Github className="w-8 h-8 text-coral-500" />
+                <a href="https://github.com/aashusoni22">
+                  <Github className="w-8 h-8 text-coral-500" />
+                </a>
               </div>
             </div>
           </div>
         </Container>
       </div>
 
-      {/* Team Section */}
-      <Container>
-        <div className="py-16">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center mb-12">
-            Meet the Team
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {team.map((member, index) => (
-              <div
-                key={index}
-                className="p-6 bg-white dark:bg-gray-800/50 backdrop-blur-xl rounded-2xl border border-gray-200 dark:border-gray-700/50 text-center"
-              >
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-24 h-24 rounded-full mx-auto mb-4"
-                />
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
-                  {member.name}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  {member.role}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </Container>
-
       {/* Contact Section */}
-      <div className="bg-white dark:bg-gray-800/50 backdrop-blur-xl border-y border-gray-200 dark:border-gray-700/50">
+      <div className="bg-white dark:bg-gray-900 backdrop-blur-xl border-y border-gray-200 dark:border-gray-700/50">
         <Container>
           <div className="py-16 text-center">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
@@ -173,7 +130,7 @@ function About() {
               Have questions or feedback? We'd love to hear from you.
             </p>
             <a
-              href="mailto:contact@megablog.com"
+              href="mailto:omsoni051@gmail.com"
               className="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-gradient-to-r from-coral-500 to-coral-600 hover:from-coral-600 hover:to-coral-700 rounded-full transition-all duration-200"
             >
               Contact Us
