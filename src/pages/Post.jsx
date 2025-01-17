@@ -152,7 +152,7 @@ export default function Post() {
               <img
                 src={appwriteService.getFilePreview(post.featuredImage)}
                 alt={post.title}
-                className="w-96 h-96"
+                className="w-[64%] h-auto object-cover rounded-lg"
                 onError={() => setImageError(true)}
               />
             ) : (

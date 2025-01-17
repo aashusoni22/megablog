@@ -96,7 +96,7 @@ function Home() {
                   featuredPosts[0].featuredImage
                 )}
                 alt={featuredPosts[0].title}
-                className="w-full h-full object-cover opacity-50"
+                className="w-full h-full object-cover opacity-20"
               />
             )}
           </div>
