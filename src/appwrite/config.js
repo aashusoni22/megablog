@@ -1,5 +1,6 @@
 import conf from "../conf/conf.js";
-import { Client, ID, Databases, Storage, Query } from "appwrite";
+import { Client, ID, Databases, Storage, Query, Account } from "appwrite";
+import authService from "./auth.js";
 
 export class Service {
   client = new Client();
@@ -17,6 +18,7 @@ export class Service {
   //create new post and store it in database
   async createPost({ title, slug, content, featuredImage, status, userId }) {
     try {
+      const currentUser = await authService.getCurrentUser();
       return await this.databases.createDocument(
         conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
@@ -24,13 +26,15 @@ export class Service {
         {
           title,
           content,
-          featuredImage,
+          featuredImage: featuredImage || "default-image-id",
           status,
           userId,
+          author: currentUser.name,
         }
       );
     } catch (error) {
       console.log("Appwrite service :: createPost :: error", error);
+      throw error;
     }
   }
 
@@ -71,11 +75,29 @@ export class Service {
   //get post
   async getPost(slug) {
     try {
-      return await this.databases.getDocument(
+      const post = await this.databases.getDocument(
         conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
         slug
       );
+
+      if (post && post.userId) {
+        try {
+          // Create a new Account instance to get user data
+          const users = new Account(this.client);
+          const authorData = await users.get(post.userId);
+
+          if (authorData) {
+            post.author = {
+              name: authorData.name,
+            };
+          }
+        } catch (error) {
+          console.log("Error fetching author data:", error);
+          post.author = { name: "Anonymous" };
+        }
+      }
+      return post;
     } catch (error) {
       console.log("Appwrite service :: getPost :: error", error);
       return false;
@@ -83,7 +105,7 @@ export class Service {
   }
 
   //get all posts
-  async getPosts(queries = [Query.equal("status", "active")]) {
+  async getPosts(queries = [Query.equal("status", "Active")]) {
     try {
       return await this.databases.listDocuments(
         conf.appwriteDatabaseId,
@@ -99,14 +121,23 @@ export class Service {
   //file upload services
   async uploadFile(file) {
     try {
-      return await this.bucket.createFile(
+      console.log("Uploading file:", file.name, "Size:", file.size);
+
+      if (!file) {
+        throw new Error("No file provided");
+      }
+
+      const uploadedFile = await this.bucket.createFile(
         conf.appwriteBucketId,
         ID.unique(),
         file
       );
+
+      console.log("File uploaded successfully:", uploadedFile);
+      return uploadedFile;
     } catch (error) {
-      console.log("Appwrite service :: uploadFile :: error", error);
-      return false;
+      console.error("Appwrite service :: uploadFile :: error", error);
+      throw new Error("Failed to upload image: " + error.message);
     }
   }
 
@@ -123,13 +154,23 @@ export class Service {
 
   //preview file
   getFilePreview(fileId) {
-    return this.bucket.getFilePreview(
-      conf.appwriteBucketId,
-      fileId,
-      500,
-      0,
-      "center"
-    );
+    try {
+      if (!fileId || fileId === "default-image-id") {
+        console.log("getFilePreview: Invalid fileId:", fileId);
+        return null;
+      }
+
+      console.log("getFilePreview: Getting preview for file:", fileId);
+      console.log("getFilePreview: Using bucket:", conf.appwriteBucketId);
+
+      const url = this.bucket.getFilePreview(conf.appwriteBucketId, fileId);
+
+      console.log("getFilePreview: Generated URL:", url);
+      return url;
+    } catch (error) {
+      console.error("Appwrite service :: getFilePreview :: error", error);
+      return null;
+    }
   }
 }
 

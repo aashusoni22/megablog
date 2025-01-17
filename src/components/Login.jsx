@@ -5,11 +5,16 @@ import { Button, Input, Logo } from "./index";
 import { useDispatch } from "react-redux";
 import authService from "../appwrite/auth";
 import { useForm } from "react-hook-form";
+import { User, Lock, AlertCircle } from "lucide-react";
 
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [error, setError] = useState("");
 
   const login = async (data) => {
@@ -27,55 +32,113 @@ function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center  min-h-44 bg-gray-50 p-4">
-      <div className="bg-white shadow-lg rounded-lg max-w-md w-full p-8 border border-gray-200">
-        <div className="flex justify-center mb-6">
-          <Logo width="60px" />
-        </div>
-        <h2 className="text-center text-3xl font-bold text-gray-800 mb-4">
-          Sign In
-        </h2>
-        <p className="text-center text-gray-600 mb-6">
-          Don't have an account?{" "}
-          <Link
-            to="/signup"
-            className="text-teal-500 font-semibold hover:underline"
-          >
-            Sign Up
-          </Link>
-        </p>
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-        <form onSubmit={handleSubmit(login)}>
-          <div className="space-y-4">
-            <Input
-              label="Email"
-              placeholder="Enter your email"
-              type="email"
-              {...register("email", {
-                required: "Email is required",
-                validate: {
-                  matchPattern: (value) =>
-                    /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
-                    "Email address must be valid",
-                },
-              })}
-            />
-            <Input
-              label="Password"
-              placeholder="Enter your password"
-              type="password"
-              {...register("password", {
-                required: "Password is required",
-              })}
-            />
-            <Button
-              type="submit"
-              className="w-full bg-teal-500 hover:bg-teal-600 text-white"
+    <div className="min-h-[90vh] flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-4">
+      <div className="w-full max-w-md space-y-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 transition-all duration-300">
+        {/* Logo and Title Section */}
+        <div className="text-center">
+          <div className="flex justify-center mb-4">
+            <Link to="/" className="flex items-center gap-2">
+              <Logo width="45px" />
+              <span className="text-xl font-semibold bg-gradient-to-r from-coral-500 to-coral-600 bg-clip-text text-transparent dark:from-coral-400 dark:to-coral-500">
+                MegaBlog
+              </span>
+            </Link>
+          </div>
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            Welcome Back
+          </h2>
+          <p className="text-gray-600 dark:text-gray-400">
+            Don't have an account?{" "}
+            <Link
+              to="/signup"
+              className="font-medium text-coral-600 hover:text-coral-500 dark:text-coral-400 dark:hover:text-coral-300"
             >
-              Sign In
-            </Button>
+              Sign up
+            </Link>
+          </p>
+        </div>
+
+        {/* Error Display */}
+        {error && (
+          <div className="flex items-center gap-2 p-4 text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/10 rounded-lg">
+            <AlertCircle size={18} />
+            <p>{error}</p>
+          </div>
+        )}
+
+        {/* Login Form */}
+        <form onSubmit={handleSubmit(login)} className="space-y-6">
+          <div className="space-y-4">
+            <div>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <User className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+                      message: "Please enter a valid email",
+                    },
+                  })}
+                  type="email"
+                  className="block w-full pl-10 px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-coral-500 dark:focus:ring-coral-400 focus:border-transparent dark:bg-gray-800 dark:text-white transition-colors"
+                  placeholder="Enter your email"
+                />
+              </div>
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Lock className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters",
+                    },
+                  })}
+                  type="password"
+                  className="block w-full pl-10 px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-coral-500 dark:focus:ring-coral-400 focus:border-transparent dark:bg-gray-800 dark:text-white transition-colors"
+                  placeholder="Enter your password"
+                />
+              </div>
+              {errors.password && (
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <button
+              type="submit"
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-coral-500 to-coral-600 hover:from-coral-600 hover:to-coral-700 dark:from-coral-400 dark:to-coral-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral-500 dark:focus:ring-offset-gray-900 transition-all duration-200"
+            >
+              Sign in
+            </button>
           </div>
         </form>
+
+        {/* Additional Links */}
+        <div className="text-center">
+          <Link
+            to="/forgot-password"
+            className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+          >
+            Forgot your password?
+          </Link>
+        </div>
       </div>
     </div>
   );

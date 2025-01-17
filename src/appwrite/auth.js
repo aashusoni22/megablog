@@ -1,4 +1,3 @@
-//we create service in auth
 import conf from "../conf/conf.js";
 import { Client, Account, ID } from "appwrite";
 

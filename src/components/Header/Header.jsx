@@ -1,143 +1,176 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Logo, LogoutBtn } from "../index";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import {
+  Menu,
+  X,
+  Sun,
+  Moon,
+  PenLine,
+  Home,
+  BookOpen,
+  User,
+  FileText,
+} from "lucide-react";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const authStatus = useSelector((state) => state.auth.status);
   const navigate = useNavigate();
 
+  // Core navigation items
   const navItems = [
     {
       name: "Home",
       slug: "/",
       active: true,
+      icon: Home,
+    },
+    {
+      name: "Explore",
+      slug: "/all-posts",
+      active: true,
+      icon: BookOpen,
+    },
+    {
+      name: "My Posts",
+      slug: "/my-posts",
+      active: authStatus,
+      icon: FileText,
     },
     {
       name: "Login",
       slug: "/login",
       active: !authStatus,
+      icon: User,
     },
     {
-      name: "Signup",
+      name: "Sign Up",
       slug: "/signup",
       active: !authStatus,
-    },
-    {
-      name: "All Posts",
-      slug: "/all-posts",
-      active: authStatus,
-    },
-    {
-      name: "Add Post",
-      slug: "/add-post",
-      active: authStatus,
+      icon: User,
     },
   ];
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", isDarkMode);
+  }, [isDarkMode]);
 
   return (
-    <header className="bg-white shadow-md py-3">
+    <header
+      className={`fixed w-full z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg shadow-sm"
+          : "bg-white dark:bg-gray-900"
+      }`}
+    >
       <Container>
-        <nav className="flex items-center justify-between">
-          <div className="flex items-center">
-            <Link to="/">
-              <Logo width="40px" />
+        <nav className="flex items-center justify-between h-16 lg:h-20">
+          {/* Logo Section */}
+          <div className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-2">
+              <Logo width="35px" />
+              <span className="text-lg font-semibold bg-gradient-to-r from-coral-500 to-coral-600 bg-clip-text text-transparent dark:from-coral-400 dark:to-coral-500">
+                MegaBlog
+              </span>
             </Link>
-            {/* Hamburger Icon */}
-            <button
-              className="md:hidden ml-4 text-slate-700"
-              onClick={toggleMenu}
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                />
-              </svg>
-            </button>
           </div>
-          {/* Desktop Menu */}
-          <ul className="hidden md:flex space-x-4">
-            {navItems.map((item) =>
-              item.active ? (
-                <li key={item.name}>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-2">
+            {/* Navigation Items */}
+            {navItems.map(
+              (item) =>
+                item.active && (
                   <button
+                    key={item.name}
                     onClick={() => navigate(item.slug)}
-                    className="px-4 py-2 font-medium text-slate-700 hover:text-cyan-500 transition duration-200 ease-in-out"
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-coral-600 dark:hover:text-coral-400 transition-colors rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50"
                   >
+                    {item.icon && <item.icon size={18} />}
                     {item.name}
                   </button>
-                </li>
-              ) : null
+                )
             )}
+
+            {/* Add Post Button - Made prominent */}
             {authStatus && (
-              <li>
-                <LogoutBtn className="text-red-500 hover:text-red-700 transition duration-200 ease-in-out" />
-              </li>
-            )}
-          </ul>
-        </nav>
-        {/* Mobile Menu */}
-        <div
-          className={`md:hidden fixed inset-0 bg-white shadow-lg transform ${
-            isMenuOpen ? "translate-x-0" : "translate-x-full"
-          } transition-transform duration-300 ease-in-out z-50`}
-        >
-          <div className="flex justify-end p-4">
-            <button className="text-slate-700" onClick={toggleMenu}>
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
+              <button
+                onClick={() => navigate("/add-post")}
+                className="flex items-center gap-2 px-4 py-2 ml-2 text-sm font-medium text-white bg-gradient-to-r from-coral-500 to-coral-600 hover:from-coral-600 hover:to-coral-700 dark:from-coral-400 dark:to-coral-500 rounded-lg transition-all duration-200 shadow-sm hover:shadow focus:ring-2 focus:ring-coral-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
+                <PenLine size={18} />
+                Write
+              </button>
+            )}
+
+            {/* Logout Button */}
+            {authStatus && <LogoutBtn />}
           </div>
-          <ul className="flex flex-col items-center space-y-4 py-4">
-            {navItems.map((item) =>
-              item.active ? (
-                <li key={item.name}>
-                  <button
-                    onClick={() => {
-                      navigate(item.slug);
-                      setIsMenuOpen(false);
-                    }}
-                    className="px-4 py-2 font-medium text-slate-700 hover:text-cyan-500 transition duration-200 ease-in-out"
-                  >
-                    {item.name}
-                  </button>
-                </li>
-              ) : null
-            )}
-            {authStatus && (
-              <li>
-                <LogoutBtn className="text-red-500 hover:text-red-700 transition duration-200 ease-in-out" />
-              </li>
-            )}
-          </ul>
-        </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </nav>
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="md:hidden absolute top-16 inset-x-0 bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 py-2">
+            <Container>
+              <div className="flex flex-col gap-1 p-2">
+                {navItems.map(
+                  (item) =>
+                    item.active && (
+                      <button
+                        key={item.name}
+                        onClick={() => {
+                          navigate(item.slug);
+                          setIsMenuOpen(false);
+                        }}
+                        className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-coral-600 dark:hover:text-coral-400 transition-colors rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50"
+                      >
+                        {item.icon && <item.icon size={18} />}
+                        {item.name}
+                      </button>
+                    )
+                )}
+
+                {authStatus && (
+                  <>
+                    <button
+                      onClick={() => {
+                        navigate("/add-post");
+                        setIsMenuOpen(false);
+                      }}
+                      className="flex items-center gap-2 px-4 py-2 mt-2 text-sm font-medium text-white bg-gradient-to-r from-coral-500 to-coral-600 hover:from-coral-600 hover:to-coral-700 dark:from-coral-400 dark:to-coral-500 rounded-lg transition-colors"
+                    >
+                      <PenLine size={18} />
+                      Write a Post
+                    </button>
+
+                    <LogoutBtn />
+                  </>
+                )}
+              </div>
+            </Container>
+          </div>
+        )}
       </Container>
     </header>
   );

@@ -7,7 +7,6 @@ import { Outlet } from "react-router-dom";
 
 function App() {
   const [loading, setLoading] = useState(true);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -25,30 +24,24 @@ function App() {
         setLoading(false);
       }
     };
-
     checkUser();
   }, [dispatch]);
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="w-16 h-16 border-4 border-t-blue-600 border-blue-200 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
   return (
-    <div
-      className={`min-h-screen flex flex-col ${
-        loading ? "bg-gray-100" : "bg-white"
-      } transition-colors duration-300`}
-    >
-      {!loading && (
-        <>
-          <Header />
-          <main className="flex-1">
-            <Outlet />
-          </main>
-          <Footer />
-        </>
-      )}
-      {loading && (
-        <div className="flex items-center justify-center h-screen bg-gray-100">
-          <p className="loader"></p>
-        </div>
-      )}
+    <div className=" min-h-screen flex flex-col text-slate-900 antialiased">
+      <Header />
+      <main className="flex-1 pt-16">
+        <Outlet />
+      </main>
+      <Footer />
     </div>
   );
 }

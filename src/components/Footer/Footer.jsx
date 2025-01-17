@@ -1,148 +1,71 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Logo } from "../../components/index";
+import { Github, Twitter, Heart, Linkedin } from "lucide-react";
 
 function Footer() {
   return (
-    <section className="relative py-6 bg-white shadow-lg">
-      <div className="relative z-10 mx-auto max-w-7xl px-4">
-        <div className="flex flex-wrap">
-          <div className="w-full p-6 md:w-1/2 lg:w-5/12">
-            <div className="flex h-full flex-col justify-between">
-              <div className="mb-4 inline-flex items-center">
-                <Logo width="80px" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-400">
-                  &copy; Copyright 2023. All Rights Reserved by DevUI.
-                </p>
-              </div>
-            </div>
+    <footer className="bg-gray-900 border-t border-gray-800">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          {/* Logo and Brand */}
+          <div className="flex items-center gap-2">
+            <Logo width="30px" />
+            <span className="text-lg font-semibold bg-gradient-to-r from-coral-400 to-coral-500 bg-clip-text text-transparent">
+              MegaBlog
+            </span>
           </div>
 
-          {/* Company Section */}
-          <div className="w-full p-6 md:w-1/2 lg:w-2/12">
-            <div className="h-full">
-              <h3 className="tracking-wider mb-6 text-sm font-semibold uppercase text-gray-500">
-                Company
-              </h3>
-              <ul>
-                <li className="mb-3">
-                  <Link
-                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
-                    to="/"
-                  >
-                    Features
-                  </Link>
-                </li>
-                <li className="mb-3">
-                  <Link
-                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
-                    to="/"
-                  >
-                    Pricing
-                  </Link>
-                </li>
-                <li className="mb-3">
-                  <Link
-                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
-                    to="/"
-                  >
-                    Affiliate Program
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
-                    to="/"
-                  >
-                    Press Kit
-                  </Link>
-                </li>
-              </ul>
-            </div>
+          {/* Center Links */}
+          <div className="flex items-center gap-6">
+            <Link
+              to="/about"
+              className="text-sm text-gray-400 hover:text-coral-400 transition-colors"
+            >
+              About
+            </Link>
+            <Link
+              to="/privacy"
+              className="text-sm text-gray-400 hover:text-coral-400 transition-colors"
+            >
+              Privacy
+            </Link>
+            <Link
+              to="/terms"
+              className="text-sm text-gray-400 hover:text-coral-400 transition-colors"
+            >
+              Terms
+            </Link>
           </div>
 
-          {/* Support Section */}
-          <div className="w-full p-6 md:w-1/2 lg:w-2/12">
-            <div className="h-full">
-              <h3 className="tracking-wider mb-6 text-sm font-semibold uppercase text-gray-500">
-                Support
-              </h3>
-              <ul>
-                <li className="mb-3">
-                  <Link
-                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
-                    to="/"
-                  >
-                    Account
-                  </Link>
-                </li>
-                <li className="mb-3">
-                  <Link
-                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
-                    to="/"
-                  >
-                    Help
-                  </Link>
-                </li>
-                <li className="mb-3">
-                  <Link
-                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
-                    to="/"
-                  >
-                    Contact Us
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
-                    to="/"
-                  >
-                    Customer Support
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Legals Section */}
-          <div className="w-full p-6 md:w-1/2 lg:w-3/12">
-            <div className="h-full">
-              <h3 className="tracking-wider mb-6 text-sm font-semibold uppercase text-gray-500">
-                Legals
-              </h3>
-              <ul>
-                <li className="mb-3">
-                  <Link
-                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
-                    to="/"
-                  >
-                    Terms &amp; Conditions
-                  </Link>
-                </li>
-                <li className="mb-3">
-                  <Link
-                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
-                    to="/"
-                  >
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="text-base font-medium text-slate-700 hover:text-cyan-400 transition-colors"
-                    to="/"
-                  >
-                    Licensing
-                  </Link>
-                </li>
-              </ul>
-            </div>
+          {/* Social Links */}
+          <div className="flex items-center gap-4">
+            <a
+              href="https://github.com/aashusoni22"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-coral-400 transition-colors"
+              aria-label="GitHub"
+            >
+              <Github size={18} />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/aashutosh-soni-225a12177"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-coral-400 transition-colors"
+              aria-label="LinkedIn"
+            >
+              <Linkedin size={18} />
+            </a>
+            <span className="text-sm text-gray-500 ml-4 flex items-center gap-1">
+              <Heart size={12} className="text-coral-500" fill="currentColor" />
+              2024
+            </span>
           </div>
         </div>
       </div>
-    </section>
+    </footer>
   );
 }
 

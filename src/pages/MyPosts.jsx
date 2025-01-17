@@ -1,36 +1,75 @@
 import React, { useEffect, useState } from "react";
 import { Container, PostCard } from "../components";
 import appwriteService from "../appwrite/config";
-import { Loader2, BookOpen, AlertCircle, Search } from "lucide-react";
-import { Query } from "appwrite"; // Import Query from appwrite
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Query } from "appwrite";
+import {
+  Loader2,
+  PlusCircle,
+  BookOpen,
+  AlertCircle,
+  Search,
+  CheckCircle2,
+  XCircle,
+} from "lucide-react";
 
-function AllPosts() {
+// Status Badge Component
+const StatusBadge = ({ status }) => {
+  const isActive = status === "Active";
+  return (
+    <div
+      className={`absolute top-4 right-4 z-50 flex items-center gap-1.5 px-3 py-1 rounded-full font-medium text-sm ${
+        isActive ? "bg-green-500/50 text-white" : "bg-red-500/50 text-white"
+      }`}
+    >
+      {isActive ? (
+        <CheckCircle2 className="w-4 h-4" />
+      ) : (
+        <XCircle className="w-4 h-4" />
+      )}
+      {status}
+    </div>
+  );
+};
+
+// Modified PostCard wrapper to include status
+const PostCardWithStatus = (post) => {
+  return (
+    <div className="relative w-full">
+      <StatusBadge status={post.status} />
+      <PostCard {...post} showManageButton={true} />
+    </div>
+  );
+};
+
+function MyPosts() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const userData = useSelector((state) => state.auth.userData);
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchUserPosts = async () => {
       try {
-        // Add status filter to only get active posts
-        const result = await appwriteService.getPosts([
-          Query.equal("status", "Active"),
-        ]);
-
-        if (result) {
-          setPosts(result.documents);
+        if (userData?.$id) {
+          const result = await appwriteService.getPosts([
+            Query.equal("userId", userData.$id),
+          ]);
+          if (result) {
+            setPosts(result.documents);
+          }
         }
       } catch (error) {
-        console.error("Error fetching posts:", error);
-        setError("Failed to fetch posts");
+        setError("Failed to fetch your posts");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPosts();
-  }, []);
+    fetchUserPosts();
+  }, [userData]);
 
   // Filter posts based on search query
   const filteredPosts = posts.filter((post) =>
@@ -43,7 +82,7 @@ function AllPosts() {
         <div className="text-center">
           <Loader2 className="w-10 h-10 text-coral-500 animate-spin mx-auto mb-4" />
           <p className="text-gray-600 dark:text-gray-400">
-            Loading amazing stories...
+            Loading your posts...
           </p>
         </div>
       </div>
@@ -72,21 +111,32 @@ function AllPosts() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-8 pb-16">
-      {/* Header Section */}
       <Container>
+        {/* Header Section */}
         <div className="max-w-2xl mx-auto text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Explore Stories
+            My Posts
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
-            Discover interesting articles and insights from our community
+            Manage and track all your published content
           </p>
+
+          {/* Action Buttons */}
+          <div className="flex justify-center gap-4 mb-8">
+            <Link
+              to="/add-post"
+              className="inline-flex items-center px-6 py-3 rounded-xl bg-coral-500 text-white hover:bg-coral-600 transition-colors"
+            >
+              <PlusCircle className="w-5 h-5 mr-2" />
+              Create New Post
+            </Link>
+          </div>
 
           {/* Search Bar */}
           <div className="relative max-w-xl mx-auto">
             <input
               type="text"
-              placeholder="Search articles..."
+              placeholder="Search your posts..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full px-4 py-3 pl-12 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-coral-500 dark:focus:ring-coral-400 focus:border-transparent transition-shadow"
@@ -100,30 +150,37 @@ function AllPosts() {
           <div className="text-center py-12">
             <BookOpen className="w-12 h-12 text-gray-400 mx-auto mb-4" />
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              No posts found
+              No posts yet
             </h2>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
               {searchQuery
-                ? "Try different search terms"
-                : "Check back later for new content"}
+                ? "No posts match your search"
+                : "Start writing and sharing your stories"}
             </p>
+            <Link
+              to="/add-post"
+              className="inline-flex items-center px-6 py-3 rounded-xl bg-coral-500 text-white hover:bg-coral-600 transition-colors"
+            >
+              <PlusCircle className="w-5 h-5 mr-2" />
+              Write Your First Post
+            </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPosts.map((post) => (
-              <div key={post.$id} className="flex">
-                <PostCard {...post} />
-              </div>
-            ))}
-          </div>
-        )}
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredPosts.map((post) => (
+                <div key={post.$id} className="flex">
+                  <PostCardWithStatus {...post} />
+                </div>
+              ))}
+            </div>
 
-        {/* Post Count */}
-        {filteredPosts.length > 0 && (
-          <div className="mt-8 text-center text-gray-600 dark:text-gray-400">
-            Showing {filteredPosts.length}{" "}
-            {filteredPosts.length === 1 ? "post" : "posts"}
-          </div>
+            {/* Post Count */}
+            <div className="mt-8 text-center text-gray-600 dark:text-gray-400">
+              You have published {filteredPosts.length}{" "}
+              {filteredPosts.length === 1 ? "post" : "posts"}
+            </div>
+          </>
         )}
       </Container>
 
@@ -136,4 +193,4 @@ function AllPosts() {
   );
 }
 
-export default AllPosts;
+export default MyPosts;
