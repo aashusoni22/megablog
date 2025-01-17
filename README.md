@@ -86,6 +86,35 @@ APPWRITEBLOG/
 └── vite.config.js
 ```
 
+## 📸 Screenshots
+
+<details>
+<summary>View All Screenshots</summary>
+
+### Homepage
+
+<img src="https://github.com/user-attachments/assets/f7dd6cbb-9e79-4cb7-ae1e-3770f7d56dc9" width="600px" alt="MegaBlog Homepage"/>
+
+<img src="https://github.com/user-attachments/assets/13a90db8-1eed-434c-a2e0-4adf38a0e234" width="600px" alt="MegaBlog Homepage"/>
+
+### Explore Posts
+<img src="https://github.com/user-attachments/assets/a6dea590-1559-4c0e-b72d-7eed938b8b74" width="600px" alt="Blog Editor"/>
+
+### My Posts
+<img src="https://github.com/user-attachments/assets/f1b1891f-43ed-40f0-afdd-f33429495c9a" width="600px" alt="Create Post"/>
+
+### Create Post
+<img src="https://github.com/user-attachments/assets/292c18dc-fe6c-4c59-bc7b-01d1a7ae3bc0" width="600px" alt="Auth Page"/>
+
+### Post details page
+<img src="https://github.com/user-attachments/assets/836e5a3d-ef3f-4e1d-8110-628d80c33608" width="600px" alt="Dashboard"/>
+
+### Blog Actions
+<img src="https://github.com/user-attachments/assets/4603c990-dda1-4184-8489-51e691c04224" width="600px" alt="Profile Page"/>
+
+</details>
+
+
 ## 🚀 Getting Started
 
 ### Prerequisites
