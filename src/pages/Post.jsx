@@ -87,12 +87,12 @@ export default function Post() {
               <div className="flex items-center space-x-4">
                 <div className="w-10 h-10 rounded-full bg-coral-500 flex items-center justify-center">
                   <span className="text-lg font-medium text-white">
-                    {(post.author?.name || "A")[0]}
+                    {(post.authorName || "A")[0]}
                   </span>
                 </div>
                 <div>
                   <div className="font-medium text-white">
-                    {post.author?.name || "Anonymous"} {/* Changed this line */}
+                    {post.authorName || "Anonymous"}
                   </div>
                   <div className="flex items-center text-sm text-gray-400 space-x-4">
                     <span className="flex items-center">
@@ -177,24 +177,6 @@ export default function Post() {
           </div>
         </Container>
       </article>
-
-      {/* Article Footer */}
-      <footer className="py-8 border-t border-gray-800">
-        <Container>
-          <div className="max-w-3xl mx-auto">
-            <div className="flex items-center justify-between">
-              <button className="flex items-center space-x-2 text-gray-400 hover:text-coral-500 transition-colors">
-                <Share2 className="w-5 h-5" />
-                <span>Share this article</span>
-              </button>
-              <button className="flex items-center space-x-2 text-gray-400 hover:text-coral-500 transition-colors">
-                <Bookmark className="w-5 h-5" />
-                <span>Save for later</span>
-              </button>
-            </div>
-          </div>
-        </Container>
-      </footer>
     </div>
   );
 }

@@ -29,7 +29,7 @@ export class Service {
           featuredImage: featuredImage || "default-image-id",
           status,
           userId,
-          author: currentUser.name,
+          authorName: currentUser.name,
         }
       );
     } catch (error) {

@@ -36,7 +36,7 @@ function App() {
   }
 
   return (
-    <div className=" min-h-screen flex flex-col text-slate-900 antialiased">
+    <div className=" min-h-screen flex flex-col bg-gray-900 text-slate-900 antialiased">
       <Header />
       <main className="flex-1 pt-16">
         <Outlet />
