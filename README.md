@@ -2,6 +2,8 @@
 
 A feature-rich blogging platform built with React and Appwrite, designed for a seamless writing and reading experience.
 
+Live Demo: [https://megablog-psi.vercel.app/](https://megablog-psi.vercel.app/)
+
 ## ✨ Features
 
 - 🔐 Secure authentication system
